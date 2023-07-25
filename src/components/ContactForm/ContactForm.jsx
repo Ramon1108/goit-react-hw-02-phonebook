@@ -17,9 +17,16 @@ class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.onSubmit(this.state);
+    const { name, number } = this.state;
 
-    this.setState({ name: '', number: '' });
+    if (name.trim() === '' || number.trim() === '') {
+      alert("Enter the contact's name and number phone!");
+    } else if (!/\d{3}[-]\d{2}[-]\d{2}/g.test(number)) {
+      alert('Enter the correct number phone!');
+    } else {
+      this.props.onSubmit({ name, number });
+      this.setState({ name: '', number: '' });
+    }
   };
 
   render() {
